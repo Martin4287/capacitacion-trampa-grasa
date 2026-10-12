@@ -2,231 +2,1257 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacitación Operativa: Limpieza de Trampa de Grasa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Guía de Bacha y Cocina: Limpieza de Trampa de Grasa</title>
   <style>
     :root {
+      --bg: #0f172a;
+      --bg-soft: #1e293b;
+      --card: #ffffff;
+      --card-muted: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #475569;
       --primary: #0284c7;
       --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
       --accent: #f97316;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
+      --accent-dark: #ea580c;
+      --accent-light: #ffedd5;
+      --success: #16a34a;
+      --success-light: #dcfce7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --warning: #eab308;
       --border: #e2e8f0;
-      --success: #22c55e;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -6px rgba(15, 23, 42, 0.05);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 16px; display: flex; justify-content: center; }
-    .container { max-width: 850px; width: 100%; display: flex; flex-direction: column; gap: 20px; }
-    
-    /* Header */
-    header { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align: center; }
-    header h1 { font-size: 1.4rem; color: var(--primary-dark); margin-bottom: 6px; }
-    header p { font-size: 0.95rem; color: var(--muted); }
 
-    /* Interactive diagram section */
-    .simulator-card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); position: relative; }
-    .tour-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-    .tour-btn { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-    .tour-btn:hover { opacity: 0.9; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    /* Chamber Visual Representation */
-    .chambers-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; position: relative; }
-    .chamber { border: 2px solid var(--border); border-radius: 8px; padding: 14px; background: #fff; cursor: pointer; transition: all 0.2s ease; position: relative; min-height: 220px; display: flex; flex-direction: column; }
-    .chamber:hover { border-color: var(--primary); transform: translateY(-2px); }
-    .chamber.active { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2); }
-    .chamber-header { font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--primary-dark); }
-    .chamber-view { flex: 1; border-radius: 6px; border: 1px dashed var(--border); display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; position: relative; }
-    
-    /* Specific Chamber Stylings */
-    .ch1-water { height: 70%; background: #94a3b8; opacity: 0.8; }
-    .ch1-sediment { height: 25%; background: #475569; }
-    
-    .ch2-crust { height: 35%; background: #d97706; border-bottom: 2px solid #b45309; }
-    .ch2-water { height: 50%; background: #cbd5e1; }
-    
-    .ch3-clean { height: 65%; background: #38bdf8; opacity: 0.8; }
-    .ch3-tiles { height: 20%; background: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 5px, #e2e8f0 5px, #e2e8f0 10px); border-top: 2px solid #94a3b8; }
+    body {
+      background: #f1f5f9;
+      color: var(--text);
+      padding-bottom: 40px;
+      line-height: 1.45;
+    }
 
-    /* Popup Modal / Overlay Tour */
-    .tour-tooltip { background: #0f172a; color: white; border-radius: 8px; padding: 16px; position: relative; margin-top: 10px; display: none; }
-    .tour-tooltip.show { display: block; animation: fadeIn 0.3s ease; }
-    .tour-tooltip h4 { color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-size: 0.95rem; }
-    .tour-tooltip p { font-size: 0.85rem; line-height: 1.4; color: #cbd5e1; margin-bottom: 10px; }
-    .tour-actions { display: flex; justify-content: flex-end; gap: 8px; }
-    .tour-actions button { padding: 6px 12px; font-size: 0.8rem; border-radius: 4px; border: none; cursor: pointer; }
-    .btn-prev { background: #334155; color: white; }
-    .btn-next { background: var(--accent); color: white; font-weight: bold; }
+    /* Top Hero Header - Industrial Kitchen Vibe */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 24px 18px 32px;
+      border-bottom: 4px solid var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
 
-    /* Info Cards */
-    .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .card { background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--border); }
-    .card h3 { font-size: 1.05rem; margin-bottom: 12px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px; }
-    .card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .card ul li { font-size: 0.88rem; display: flex; align-items: flex-start; gap: 8px; color: var(--text); }
-    .badge { background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; white-space: nowrap; }
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 640px) {
-      .chambers-container { grid-template-columns: 1fr; }
-      .chamber { min-height: 160px; }
-      .grid-info { grid-template-columns: 1fr; }
+    .role-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .pill-orange {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .pill-blue {
+      background: rgba(56, 189, 248, 0.18);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.45rem, 4vw, 2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      max-width: 680px;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 900px;
+      margin: -18px auto 0;
+      padding: 0 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Quick Golden Rule Banner */
+    .quick-rule {
+      background: #fffbeb;
+      border: 2px solid #f59e0b;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .quick-rule-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .quick-rule-text strong {
+      color: #92400e;
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .quick-rule-text span {
+      color: #78350f;
+      font-size: 0.86rem;
+    }
+
+    /* Interactive Simulator Card */
+    .simulator-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .sim-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .sim-title-group h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sim-title-group p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .sim-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 16px rgba(249, 115, 22, 0.45);
+    }
+
+    .btn-state {
+      background: #f1f5f9;
+      color: #334155;
+      border: 2px solid #cbd5e1;
+    }
+
+    .btn-state.is-clean {
+      background: var(--success-light);
+      color: #166534;
+      border-color: #4ade80;
+    }
+
+    /* Step Pills Bar */
+    .step-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .step-tab {
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .step-tab span {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+
+    .step-tab.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .step-tab.active span {
+      color: var(--primary);
+    }
+
+    /* Pipe Flow Diagram Header */
+    .flow-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 8px 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .flow-endpoint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .flow-arrow {
+      color: #38bdf8;
+      letter-spacing: 2px;
+      font-weight: 900;
+    }
+
+    /* Chambers Cross-Section Grid */
+    .chambers-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .chamber {
+      border: 3px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 12px;
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chamber:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .chamber.active {
+      border-color: var(--accent);
+      background: #fffaf5;
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
+    }
+
+    .chamber-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .chamber-num {
+      background: #1e293b;
+      color: #fff;
+      font-weight: 900;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .chamber.active .chamber-num {
+      background: var(--accent);
+    }
+
+    .tap-hint {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 2px 7px;
+      border-radius: 99px;
+    }
+
+    .chamber-title {
+      font-weight: 800;
+      font-size: 0.96rem;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .chamber-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    /* Realistic Tank View inside each Chamber */
+    .chamber-tank {
+      height: 185px;
+      border-radius: 10px;
+      border: 2px solid #94a3b8;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Pipe Graphic Elements inside Tank */
+    .pipe-in {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 42px;
+      height: 22px;
+      background: repeating-linear-gradient(90deg, #475569, #475569 4px, #334155 4px, #334155 8px);
+      border-radius: 0 6px 6px 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.62rem;
+      font-weight: 800;
+    }
+
+    .pipe-out {
+      position: absolute;
+      bottom: 38px;
+      right: 0;
+      width: 34px;
+      height: 75px;
+      border-left: 6px solid #475569;
+      border-top: 6px solid #475569;
+      border-radius: 10px 0 0 0;
+      z-index: 3;
+    }
+
+    /* Layer Labels inside Tank */
+    .tank-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin: 4px auto;
+      text-align: center;
+      z-index: 2;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* Chamber 1 Layers */
+    .ch1-water {
+      height: 58%;
+      background: linear-gradient(180deg, #7dd3fc 0%, #64748b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    .ch1-sediment {
+      height: 27%;
+      background: repeating-radial-gradient(circle at 20% 50%, #334155, #1e293b 8px, #475569 12px);
+      border-top: 2px dashed #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    /* Chamber 2 Layers */
+    .ch2-crust {
+      height: 36%;
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 65%, #b45309 100%);
+      border-bottom: 3px solid #92400e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    .ch2-water {
+      height: 49%;
+      background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    /* Chamber 3 Layers */
+    .ch3-clean {
+      height: 63%;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.65) 0%, rgba(14, 165, 233, 0.8) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    .ch3-tiles {
+      height: 22%;
+      background:
+        linear-gradient(90deg, #cbd5e1 1px, transparent 1px),
+        linear-gradient(180deg, #cbd5e1 1px, #ffffff 1px);
+      background-size: 16px 16px;
+      background-color: #ffffff;
+      border-top: 2px solid #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    /* Clean Mode Visual Transitions */
+    .is-clean-mode .ch1-water,
+    .is-clean-mode .ch2-water,
+    .is-clean-mode .ch3-clean {
+      background: linear-gradient(180deg, rgba(125, 211, 252, 0.6) 0%, rgba(56, 189, 248, 0.85) 100%);
+    }
+
+    .is-clean-mode .ch1-sediment {
+      height: 14%;
+      background: #e2e8f0;
+      border-top: 2px solid #38bdf8;
+    }
+
+    .is-clean-mode .ch2-crust {
+      height: 0%;
+      opacity: 0;
+      border: none;
+      overflow: hidden;
+    }
+
+    .is-clean-mode .ch2-water {
+      height: 82%;
+    }
+
+    /* Action Instruction Box (Bacha-friendly) */
+    .action-panel {
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 18px;
+      border-left: 6px solid var(--accent);
+      transition: all 0.25s ease;
+    }
+
+    .action-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .action-step-title {
+      font-size: 1.08rem;
+      font-weight: 900;
+      color: #fbbf24;
+    }
+
+    .action-step-counter {
+      background: rgba(255,255,255,0.12);
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .action-box {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .action-box h4 {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-box.do-box h4 {
+      color: #38bdf8;
+    }
+
+    .action-box.result-box h4 {
+      color: #4ade80;
+    }
+
+    .action-box p {
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      line-height: 1.45;
+    }
+
+    .action-warning {
+      background: rgba(220, 38, 38, 0.2);
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      color: #fecaca;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tour-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-nav {
+      background: #334155;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 800;
+      font-size: 0.86rem;
+      cursor: pointer;
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-next-step {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-left: auto;
+    }
+
+    /* Interactive Checklist for the Bachero */
+    .checklist-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-header h3 {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-pill {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 99px;
+    }
+
+    .check-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: var(--card-muted);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+
+    .check-item:hover {
+      border-color: #94a3b8;
+    }
+
+    .check-item.checked {
+      background: var(--success-light);
+      border-color: #4ade80;
+    }
+
+    .check-box {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      border: 2px solid #64748b;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: transparent;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .check-item.checked .check-box {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+
+    .check-text {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .check-item.checked .check-text {
+      text-decoration: line-through;
+      color: #166534;
+    }
+
+    /* Prohibited / Danger Card */
+    .danger-card {
+      background: #fff1f2;
+      border: 2px solid #fda4af;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .danger-card h3 {
+      color: #9f1239;
+      font-size: 1.15rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .danger-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .danger-item {
+      background: #ffffff;
+      border: 1px solid #fecdd3;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .danger-item strong {
+      display: block;
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .danger-item p {
+      font-size: 0.83rem;
+      color: #475569;
+    }
+
+    /* Two-Column Info Cards (EPP & Frequency) */
+    .grid-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .info-card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h3 {
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .item-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--card-muted);
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .item-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .badge-epp { background: #dbeafe; color: #1e40af; }
+    .badge-tool { background: #fef3c7; color: #92400e; }
+    .badge-freq { background: #dcfce7; color: #166534; }
+    .badge-crit { background: #fee2e2; color: #991b1b; }
+
+    @media (max-width: 720px) {
+      .chambers-container {
+        grid-template-columns: 1fr;
+      }
+      .chamber-tank {
+        height: 150px;
+      }
+      .action-grid {
+        grid-template-columns: 1fr;
+      }
+      .danger-grid {
+        grid-template-columns: 1fr;
+      }
+      .grid-info {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <header>
-    <h1>Manual Operativo: Limpieza de Trampa de Grasas</h1>
-    <p>Simulador técnico de inspección y protocolo higiénico-sanitario</p>
+  <!-- HERO HEADER -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="role-pills">
+        <span class="pill pill-orange">👨‍🍳 Sector Bacha y Cocina</span>
+        <span class="pill pill-blue">📋 Protocolo Rápido</span>
+      </div>
+      <h1>Limpieza de Trampa de Grasa</h1>
+      <p>Guía visual paso a paso para desnatar, limpiar el fondo y evitar que se tapen las cañerías o salga mal olor en la cocina.</p>
+    </div>
   </header>
 
-  <section class="simulator-card">
-    <div class="tour-banner">
-      <div>
-        <strong>Modo Interactivo Asistido</strong>
-        <p style="font-size: 0.85rem; color: #475569;">Sigue las flechas y aprende la función de cada sección.</p>
+  <main class="container">
+
+    <!-- REGLA DE ORO RAPIDA -->
+    <div class="quick-rule">
+      <div class="quick-rule-icon">💡</div>
+      <div class="quick-rule-text">
+        <strong>¿Cómo funciona la trampa?</strong>
+        <span>El agua sucia entra desde la bacha, la <b>comida pesada cae al fondo (Cámara 1)</b>, la <b>grasa flota arriba cuando se enfría (Cámara 2)</b> y solo el <b>agua limpia sale a la cloaca (Cámara 3)</b>.</span>
       </div>
-      <button class="tour-btn" onclick="startTour()">Iniciar Recorrido</button>
     </div>
 
-    <!-- Chambers Container -->
-    <div class="chambers-container">
-      <!-- Camara 1 -->
-      <div class="chamber" id="camara-1" onclick="selectChamber(1)">
-        <div class="chamber-header">1. Decantación Primaria</div>
-        <div class="chamber-view">
-          <div class="ch1-water"></div>
-          <div class="ch1-sediment"></div>
+    <!-- SIMULADOR INTERACTIVO -->
+    <section class="simulator-card" id="simulatorCard">
+      <div class="sim-top-bar">
+        <div class="sim-title-group">
+          <h2>🔍 Simulador de las 3 Cámaras</h2>
+          <p>Tocá cada cámara para ver cómo se limpia paso a paso.</p>
         </div>
-        <p style="font-size: 0.75rem; color: var(--muted); margin-top: 6px;">Entrada de aguas / Sedimentos pesados</p>
-      </div>
-
-      <!-- Camara 2 -->
-      <div class="chamber" id="camara-2" onclick="selectChamber(2)">
-        <div class="chamber-header">2. Retención de Grasa</div>
-        <div class="chamber-view">
-          <div class="ch2-crust"></div>
-          <div class="ch2-water"></div>
+        <div class="sim-controls">
+          <button class="btn btn-state" id="toggleCleanBtn" onclick="toggleCleanPreview()">
+            👀 Ver Trampa Limpia
+          </button>
+          <button class="btn btn-primary" onclick="startTour()">
+            ▶️ Iniciar Paso a Paso
+          </button>
         </div>
-        <p style="font-size: 0.75rem; color: var(--muted); margin-top: 6px;">Costra sólida flotante de lípidos</p>
       </div>
 
-      <!-- Camara 3 -->
-      <div class="chamber" id="camara-3" onclick="selectChamber(3)">
-        <div class="chamber-header">3. Salida / Sifón Limpio</div>
-        <div class="chamber-view">
-          <div class="ch3-clean"></div>
-          <div class="ch3-tiles"></div>
+      <!-- Selector rápido de pasos -->
+      <div class="step-tabs">
+        <div class="step-tab active" id="tab-1" onclick="selectChamber(1)">
+          <span>Paso 1</span>
+          1. Entrada y Sólidos
         </div>
-        <p style="font-size: 0.75rem; color: var(--muted); margin-top: 6px;">Fondo cerámico blanco / Codo sifónico</p>
+        <div class="step-tab" id="tab-2" onclick="selectChamber(2)">
+          <span>Paso 2</span>
+          2. Sacar la Grasa
+        </div>
+        <div class="step-tab" id="tab-3" onclick="selectChamber(3)">
+          <span>Paso 3</span>
+          3. Fondo y Cebado
+        </div>
+      </div>
+
+      <!-- Indicador de sentido del agua -->
+      <div class="flow-header">
+        <div class="flow-endpoint">🚰 Viene de la Bacha</div>
+        <div class="flow-arrow">➔ FLUJO DEL AGUA ➔</div>
+        <div class="flow-endpoint">Salida a Cloaca 🌊</div>
+      </div>
+
+      <!-- Las 3 Cámaras -->
+      <div class="chambers-container" id="chambersGrid">
+        <!-- CAMARA 1 -->
+        <div class="chamber active" id="camara-1" onclick="selectChamber(1)">
+          <div class="chamber-badge-row">
+            <span class="chamber-num">Cámara 1</span>
+            <span class="tap-hint">Tocar para ver</span>
+          </div>
+          <div class="chamber-title">Entrada y Comida</div>
+          <div class="chamber-sub">Retiene restos pesados en el fondo</div>
+          <div class="chamber-tank">
+            <div class="pipe-in">BACHA</div>
+            <div class="ch1-water">
+              <span class="tank-label" style="background:#0f172a; color:#38bdf8;">Agua de Entrada</span>
+            </div>
+            <div class="ch1-sediment">
+              <span class="tank-label" id="lbl-ch1-sed" style="background:#ef4444; color:#fff;">⚠️ Barro y Comida</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAMARA 2 -->
+        <div class="chamber" id="camara-2" onclick="selectChamber(2)">
+          <div class="chamber-badge-row">
+            <span class="chamber-num">Cámara 2</span>
+            <span class="tap-hint">Tocar para ver</span>
+          </div>
+          <div class="chamber-title">Trampa de Grasa</div>
+          <div class="chamber-sub">La grasa flota y forma una costra</div>
+          <div class="chamber-tank">
+            <div class="ch2-crust">
+              <span class="tank-label" style="background:#78350f; color:#fde68a;">🧀 Costra de Grasa</span>
+            </div>
+            <div class="ch2-water">
+              <span class="tank-label" style="background:#1e293b; color:#cbd5e1;">Agua Intermedia</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAMARA 3 -->
+        <div class="chamber" id="camara-3" onclick="selectChamber(3)">
+          <div class="chamber-badge-row">
+            <span class="chamber-num">Cámara 3</span>
+            <span class="tap-hint">Tocar para ver</span>
+          </div>
+          <div class="chamber-title">Salida / Sifón Limpio</div>
+          <div class="chamber-sub">Debe verse el cerámico blanco</div>
+          <div class="chamber-tank">
+            <div class="pipe-out" title="Sifón de salida"></div>
+            <div class="ch3-clean">
+              <span class="tank-label" style="background:#0369a1; color:#fff;">💧 Agua Limpia</span>
+            </div>
+            <div class="ch3-tiles">
+              <span class="tank-label" style="background:#ffffff; color:#0f172a; border:1px solid #94a3b8;">⬜ Cerámico Blanco</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Instrucción del Paso Activo -->
+      <div class="action-panel" id="tourBox">
+        <div class="action-panel-header">
+          <div class="action-step-title" id="tourActionTitle">👉 PASO 1: Cámara 1 (Entrada de la Bacha)</div>
+          <div class="action-step-counter" id="tourStepCounter">Paso 1 de 3</div>
+        </div>
+
+        <div class="action-grid">
+          <div class="action-box do-box">
+            <h4>🛠️ ¿Qué tenés que hacer?</h4>
+            <p id="tourActionText">Revisá el caño que viene de la bacha y meté el canastillo o espumadera hasta el fondo para sacar los restos de comida, semillas y barro pesado.</p>
+          </div>
+          <div class="action-box result-box">
+            <h4>✅ ¿Cómo tiene que quedar?</h4>
+            <p id="tourResultText">El caño de entrada libre sin tapones y el fondo sin restos sólidos acumulados.</p>
+          </div>
+        </div>
+
+        <div class="action-warning" id="tourWarningText">
+          ⚠️ <strong>¡OJO EN LA BACHA!</strong> Nunca saques la rejilla de las bachas al lavar; todo fideo o arroz que pasa termina pudriéndose acá.
+        </div>
+
+        <div class="tour-nav">
+          <button class="btn-nav" id="prevBtn" onclick="prevStep()">⬅ Anterior</button>
+          <button class="btn-next-step" id="nextBtn" onclick="nextStep()">Siguiente Paso ➔</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKLIST INTERACTIVO PARA USAR MIENTRAS LIMPIAN -->
+    <section class="checklist-card">
+      <div class="section-header">
+        <h3>✅ Checklist de Limpieza (Tildá a medida que avanzás)</h3>
+        <span class="progress-pill" id="checklistProgress">0 de 5 completados</span>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">1. Me puse los guantes largos, antiparras y preparé el balde con bolsa gruesa.</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">2. Retiré con la espumadera toda la costra de grasa flotante de la Cámara 2 (en seco, sin revolver).</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">3. Saqué los restos de comida y barro del fondo de la Cámara 1.</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">4. Rasqueteé con espátula plástica hasta ver el fondo cerámico blanco limpio en la Cámara 3.</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">5. ¡IMPORTANTE! Volví a llenar la trampa con baldes de agua limpia fría para sellar contra malos olores.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROHIBIDO / ERRORES QUE TAPAN LA COCINA -->
+    <section class="danger-card">
+      <h3>🚫 ¡PROHIBIDO! Los 3 errores que tapan toda la cocina</h3>
+      <div class="danger-grid">
+        <div class="danger-item">
+          <strong>❌ NO tirar agua hirviendo ni desengrasante puro</strong>
+          <p>Si tirás agua caliente o detergente fuerte adentro de la trampa, la grasa se derrite, pasa de largo y se solidifica adentro del caño de la calle tapando todo.</p>
+        </div>
+        <div class="danger-item">
+          <strong>❌ NO rasquetear con espátula de metal</strong>
+          <p>El metal salta el esmalte del cerámico blanco y rompe las juntas de cemento. Usá siempre rasqueta de plástico o goma dura.</p>
+        </div>
+        <div class="danger-item">
+          <strong>❌ NO dejar la trampa vacía al terminar</strong>
+          <p>Si la vaciás y no la volvés a llenar con agua limpia ("cebar"), el olor de la cloaca sube directo a toda la cocina y al salón.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPO Y FRECUENCIAS -->
+    <div class="grid-info">
+      <div class="info-card">
+        <h3>🧤 Qué necesitás antes de abrir la tapa</h3>
+        <ul class="item-list">
+          <li>
+            <span class="item-icon">🧤</span>
+            <div>
+              <span class="badge badge-epp">Protección</span>
+              <p><strong>Guantes largos de goma o nitrilo</strong> (que cubran el antebrazo) y antiparras para salpicaduras.</p>
+            </div>
+          </li>
+          <li>
+            <span class="item-icon">😷</span>
+            <div>
+              <span class="badge badge-epp">Protección</span>
+              <p><strong>Barbijo / Mascarilla</strong> para trabajar cómodo sin respirar los vapores al destapar.</p>
+            </div>
+          </li>
+          <li>
+            <span class="item-icon">🥄</span>
+            <div>
+              <span class="badge badge-tool">Herramienta</span>
+              <p><strong>Espumadera o canastillo colador</strong> exclusivo para la trampa (permite sacar la grasa escurriendo el agua).</p>
+            </div>
+          </li>
+          <li>
+            <span class="item-icon">🪣</span>
+            <div>
+              <span class="badge badge-tool">Descarte</span>
+              <p><strong>Rasqueta plástica + Balde con doble bolsa negra gruesa</strong> (100 micrones) para que no gotee en el piso.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>⏱️ Cada cuánto hay que hacerlo</h3>
+        <ul class="item-list">
+          <li>
+            <span class="item-icon">👀</span>
+            <div>
+              <span class="badge badge-freq">Todos los días</span>
+              <p><strong>Mirada rápida al cierre:</strong> levantar la tapa y chequear qué tan gruesa está la capa de grasa en la Cámara 2.</p>
+            </div>
+          </li>
+          <li>
+            <span class="item-icon">🧹</span>
+            <div>
+              <span class="badge badge-freq">Cada 2 o 3 días</span>
+              <p><strong>Desnatado superficial:</strong> sacar con la espumadera la costra de arriba de la Cámara 2 (lleva 5 minutos si no se deja acumular).</p>
+            </div>
+          </li>
+          <li>
+            <span class="item-icon">🧼</span>
+            <div>
+              <span class="badge badge-freq">1 vez por semana</span>
+              <p><strong>Limpieza profunda completa:</strong> vaciar todas las cámaras, rasquetear paredes y dejar el cerámico blanco impecable.</p>
+            </div>
+          </li>
+          <li>
+            <span class="item-icon">💧</span>
+            <div>
+              <span class="badge badge-crit">Siempre al terminar</span>
+              <p><strong>Cebado obligatorio:</strong> tirar baldes de agua limpia hasta que el nivel tape los tabiques (trampa de olor activa).</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <!-- Guía con popups interactivos -->
-    <div id="tourBox" class="tour-tooltip">
-      <h4 id="tourActionTitle">👉 ¿Qué debes presionar?</h4>
-      <p id="tourActionText">Selecciona la Cámara 2 para aprender el método de desnatado.</p>
-      <h4 style="color: #4ade80;">✨ Resultado esperado</h4>
-      <p id="tourResultText">Se retirará la costra sólida de lípidos sin revolver el agua inferior.</p>
-      <div class="tour-actions">
-        <button class="btn-prev" onclick="prevStep()">Anterior</button>
-        <button class="btn-next" onclick="nextStep()">Siguiente</button>
-      </div>
-    </div>
-  </section>
+  </main>
 
-  <!-- Secciones informativas -->
-  <div class="grid-info">
-    <div class="card">
-      <h3>🛠️ Materiales y EPP Obligatorio</h3>
-      <ul>
-        <li><span class="badge">EPP</span> Guantes de nitrilo o goma de caña larga (resistentes a grasas).</li>
-        <li><span class="badge">EPP</span> Gafas de seguridad y mascarilla con filtro de carbón para olores.</li>
-        <li><span class="badge">HERRAMIENTA</span> Espumadera / canastillo metálico para desnatado manual.</li>
-        <li><span class="badge">HERRAMIENTA</span> Rasqueta plástica/goma (no metálica para no dañar juntas).</li>
-        <li><span class="badge">DISPOSICIÓN</span> Bolsas de basura gruesas (100 micrones) y balde de descarga.</li>
-      </ul>
-    </div>
+  <script>
+    let currentStep = 0;
+    let isCleanPreview = false;
 
-    <div class="card">
-      <h3>⏱️ Frecuencias Operativas</h3>
-      <ul>
-        <li><span class="badge">DIARIA</span> Inspección ocular del nivel del manto de grasa en Cámara 2.</li>
-        <li><span class="badge">2 A 3 DÍAS</span> Retiro manual de la capa superficial en cocinas de alto volumen.</li>
-        <li><span class="badge">SEMANAL</span> Vaciado total, rasqueteado del fondo cerámico blanco y cebado.</li>
-        <li><span class="badge">OBLIGATORIO</span> Tras cada limpieza general, volver a llenar las cámaras con agua limpia para garantizar el sello hidráulico anti-olores.</li>
-      </ul>
-    </div>
-  </div>
-</div>
+    const tourData = [
+      {
+        targetId: 'camara-1',
+        tabId: 'tab-1',
+        stepCounter: 'Paso 1 de 3',
+        title: '👉 PASO 1: Cámara 1 (Entrada de la Bacha)',
+        action: 'Revisá el caño corrugado que trae el agua de la bacha y pasá el canastillo por el fondo para levantar la comida pesada, semillas y barro.',
+        result: 'El caño de entrada queda destapado y el fondo libre de barro pesado que achica la capacidad.',
+        warning: '⚠️ ¡OJO EN LA BACHA! Nunca saques las rejillas de las piletas al lavar; cada resto de comida que pasa pudre el agua acá.'
+      },
+      {
+        targetId: 'camara-2',
+        tabId: 'tab-2',
+        stepCounter: 'Paso 2 de 3',
+        title: '👉 PASO 2: Cámara 2 (Desnatado de la Grasa)',
+        action: 'Con la espumadera, levantá de arriba la costra dura amarilla/marrón de grasa sin revolver el agua de abajo. Escurrí un segundo y tirala directo al balde con doble bolsa.',
+        result: 'Toda la capa de grasa sólida queda en la bolsa de basura y el agua del medio queda libre para circular.',
+        warning: '🚫 ¡JAMÁS TIRES AGUA HIRVIENDO O DESENGRASANTE ACÁ! Si derretís la grasa, pasa a los caños y tapa toda la cocina.'
+      },
+      {
+        targetId: 'camara-3',
+        tabId: 'tab-3',
+        stepCounter: 'Paso 3 de 3',
+        title: '👉 PASO 3: Cámara 3 (Fondo Blanco y Cebado)',
+        action: 'Pasá la rasqueta plástica hasta que se vea perfecto el piso de cerámico blanco y el codo de salida esté limpio. Al terminar, llená con baldes de agua fría limpia.',
+        result: 'Se ve el cerámico blanco brillante en el fondo y la trampa queda llena de agua limpia (sello anti-olores listo).',
+        warning: '💧 ¡NO TE OLVIDES DE LLENARLA CON AGUA LIMPIA! Si queda vacía, el olor de la cloaca sale directo a la cocina.'
+      }
+    ];
 
-<script>
-  let currentStep = 0;
-  const tourData = [
-    {
-      targetId: 'camara-1',
-      title: '👉 PASO 1: Cámara de Decantación (Entrada)',
-      action: 'Inspecciona la entrada del caño corrugado y el fondo.',
-      result: 'Extrae con el canastillo los sólidos pesados y restos de comida sedimentados en el fondo antes de pasar al desnatado.'
-    },
-    {
-      targetId: 'camara-2',
-      title: '👉 PASO 2: Cámara Central de Grasa (Desnatado)',
-      action: 'Presiona sobre la costra sólida de grasa.',
-      result: 'Usa la espumadera para retirar en seco la costra amarillenta/marrón hacia una bolsa de residuos. Jamás uses detergente concentrado aquí para no emulsionar la grasa hacia la cañería pública.'
-    },
-    {
-      targetId: 'camara-3',
-      title: '👉 PASO 3: Salida Limpia y Fondo Cerámico',
-      action: 'Verifica la visibilidad del piso cerámico blanco.',
-      result: 'El agua debe estar transparente y la cerámica del fondo libre de sarro negro. Vuelve a cebar con balde de agua limpia para reactivar el sifón.'
-    }
-  ];
-
-  function startTour() {
-    currentStep = 0;
-    renderStep();
-  }
-
-  function renderStep() {
-    const box = document.getElementById('tourBox');
-    box.classList.add('show');
-    
-    document.querySelectorAll('.chamber').forEach(c => c.classList.remove('active'));
-    const step = tourData[currentStep];
-    const target = document.getElementById(step.targetId);
-    if(target) target.classList.add('active');
-
-    document.getElementById('tourActionTitle').innerText = step.title;
-    document.getElementById('tourActionText').innerText = step.action;
-    document.getElementById('tourResultText').innerText = step.result;
-  }
-
-  function nextStep() {
-    if (currentStep < tourData.length - 1) {
-      currentStep++;
+    function startTour() {
+      if (isCleanPreview) {
+        toggleCleanPreview();
+      }
+      currentStep = 0;
       renderStep();
-    } else {
-      document.getElementById('tourBox').classList.remove('show');
+      document.getElementById('simulatorCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderStep() {
+      const step = tourData[currentStep];
+
       document.querySelectorAll('.chamber').forEach(c => c.classList.remove('active'));
-      alert("¡Capacitación completada con éxito!");
-    }
-  }
+      document.querySelectorAll('.step-tab').forEach(t => t.classList.remove('active'));
 
-  function prevStep() {
-    if (currentStep > 0) {
-      currentStep--;
+      const target = document.getElementById(step.targetId);
+      const tab = document.getElementById(step.tabId);
+      if (target) target.classList.add('active');
+      if (tab) tab.classList.add('active');
+
+      document.getElementById('tourActionTitle').innerText = step.title;
+      document.getElementById('tourStepCounter').innerText = step.stepCounter;
+      document.getElementById('tourActionText').innerText = step.action;
+      document.getElementById('tourResultText').innerText = step.result;
+      document.getElementById('tourWarningText').innerHTML = step.warning;
+
+      document.getElementById('prevBtn').disabled = (currentStep === 0);
+      document.getElementById('nextBtn').innerText = (currentStep === tourData.length - 1)
+        ? '✅ ¡Listo! Ver Trampa Limpia'
+        : 'Siguiente Paso ➔';
+    }
+
+    function nextStep() {
+      if (currentStep < tourData.length - 1) {
+        currentStep++;
+        renderStep();
+      } else {
+        if (!isCleanPreview) {
+          toggleCleanPreview();
+        }
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderStep();
+      }
+    }
+
+    function selectChamber(num) {
+      currentStep = num - 1;
       renderStep();
     }
-  }
 
-  function selectChamber(num) {
-    currentStep = num - 1;
-    renderStep();
-  }
-</script>
+    function toggleCleanPreview() {
+      isCleanPreview = !isCleanPreview;
+      const grid = document.getElementById('chambersGrid');
+      const btn = document.getElementById('toggleCleanBtn');
+      const sedLbl = document.getElementById('lbl-ch1-sed');
+
+      if (isCleanPreview) {
+        grid.classList.add('is-clean-mode');
+        btn.classList.add('is-clean');
+        btn.innerText = '✨ Estado: ¡Trampa Limpia y Cebada! (Volver a ver sucia)';
+        sedLbl.innerText = '✅ Fondo Limpio';
+        sedLbl.style.background = '#16a34a';
+      } else {
+        grid.classList.remove('is-clean-mode');
+        btn.classList.remove('is-clean');
+        btn.innerText = '👀 Ver Trampa Limpia';
+        sedLbl.innerText = '⚠️ Barro y Comida';
+        sedLbl.style.background = '#ef4444';
+      }
+    }
+
+    function toggleCheck(el) {
+      el.classList.toggle('checked');
+      const total = document.querySelectorAll('.check-item').length;
+      const done = document.querySelectorAll('.check-item.checked').length;
+      const pill = document.getElementById('checklistProgress');
+      pill.innerText = `${done} de ${total} completados`;
+      if (done === total) {
+        pill.style.background = '#dcfce7';
+        pill.style.color = '#166534';
+        pill.innerText = '🎉 ¡Limpieza Completada!';
+      } else {
+        pill.style.background = '#e0f2fe';
+        pill.style.color = '#0369a1';
+      }
+    }
+  </script>
 </body>
 </html>
